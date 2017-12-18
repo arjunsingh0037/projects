@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<libraries>
+    <library>
+        <location>q2a/</location>
+        <name>Question2Answer</name>
+        <version>1.7.4</version>
+        <license>GPL</license>
+        <licenseversion>2+</licenseversion>
+    </library>
+</libraries>

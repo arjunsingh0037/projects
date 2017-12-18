@@ -1,0 +1,46 @@
+.block_groups div.memberlist {
+    list-style: url('[[pix:i/navigationitem]]');
+}
+
+.block_groups input.blockgroupsandgroupingcheckbox {
+    cursor: pointer;
+    display: none;
+    text-align: left;
+}
+
+.block_groups input.blockgroupsandgroupingcheckbox ~ label::before {
+    content: url('[[pix:t/collapsed]]');
+}
+
+.block_groups input.blockgroupsandgroupingcheckbox:checked ~ label::before {
+    content: url('[[pix:t/expanded]]');
+}
+
+.block_groups input.blockgroupsandgroupingcheckbox ~ ul {
+    display: none;
+}
+
+.block_groups input.blockgroupsandgroupingcheckbox:checked ~ ul {
+    display: block;
+    list-style: url('[[pix:i/navigationitem]]');
+    padding-left: 16px;
+}
+
+.block_groups .rightalign {
+    float: right;
+}
+
+.block_groups .hiddengroups {
+    opacity: 0.5;
+}
+.block_groups img {
+    margin-right: 5px;
+    margin-top: 3px;
+    vertical-align: top;
+}
+.block_groups li {
+    line-height: 22px;
+}
+.block_groups .block-groups-warning, .block_groups .block-groups-spinner {
+    padding-right: 6px;
+}

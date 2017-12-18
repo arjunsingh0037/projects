@@ -1,0 +1,367 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+
+{{!
+    @template theme_booster/frontpage_guest
+
+    Guest frontpage template.
+
+    booster frontpage guest layout template.
+
+    Context variables required for this template:
+    * sitename - The name of the site
+    * output - The core renderer for the page
+    * bodyattributes - attributes for the body tag as a string of html attributes
+
+    Example context (json):
+    {
+        "sitename": "Moodle",
+        "output": {
+            "doctype": "<!DOCTYPE html>",
+            "page_title": "Test page",
+            "favicon": "favicon.ico",
+            "main_content": "<h1>Headings make html validators happier</h1>"
+         },
+        "bodyattributes":"",
+        "cansignup": true,
+        "bannerheading": "Content string banner heading",
+        "bannercontent": "Content string banner content",
+        "shoulddisplaymarketing": true
+    }
+}}
+{{{ output.doctype }}}
+<html {{{ output.htmlattributes }}}>
+<head>
+    <title>{{{ output.page_title }}}</title>
+    <link rel="shortcut icon" href="{{{ output.favicon }}}" />
+    {{{ output.standard_head_html }}}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+</head>
+
+<body {{{ bodyattributes }}}>
+
+    <div>
+   		{{>theme_booster/header}}
+    </div>
+    <div class="container">
+     {{{ output.main_content }}}
+    </div>
+     <div class"row">
+      <nav class="nav navbar-nav fixed1">
+        <div class="col-md-2">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">{{output.get_tab1_config}}</a>
+          </div>
+         </div>
+         <div class="col-md-10">
+           <ul class="nav1">
+              <li class="active"><a href="#"><span class="outer"><span class="inner"><b>{{output.get_tab2_config}}</b></span></span></a></li>
+              <li><a href="#"><span class="outer"><span class="inner"><b>{{output.get_tab3_config}}</b></span></span></a></li>
+              <li><a href="#"><span class="outer"><span class="inner"><b>{{output.get_tab4_config}}</b></span></span></a></li>
+              <li><a href="#"><span class="outer"><span class="inner"><b>{{output.get_tab5_config}}</b></span></span></a></li>
+              <li><a href="#"><span class="outer"><span class="inner"><b>{{output.get_tab6_config}}</b></span></span></a></li>
+               <li class="dropdown">
+                  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="outer">
+                    <span class="inner">
+                      <b>{{output.get_tab7_config}}</b>
+                    </span>
+                  </a>
+                 <ul class="dropdown-menu">
+                    <li><a href="#">Blog Page 1</a></li>
+                    <li><a href="#">Blog Page 2</a></li>
+                    <li><a href="#">Blog Page 3</a></li>
+                  </ul>
+                </li>
+                  <li><a href="#"><span class="outer"><span class="inner"><b>{{output.get_tab8_config}}</b></span></span></a></li>
+                  <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+           </ul>
+         </div> 
+      </nav><br><br>
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                       <!-- Indicators -->
+                 <ol class="carousel-indicators">
+                    <li  style="text-align: center" data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li  style="text-align: center" data-target="#myCarousel" data-slide-to="1"></li>
+                    <li  style="text-align: center" data-target="#myCarousel" data-slide-to="2"></li>
+                  </ol>
+                  <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+
+                      <div class="item active">
+                        <img src="http://localhost/sangita/theme/booster/pix/img1.jpg" alt="Los Angeles" style="width:100%;">
+                        <div class="carousel-caption">
+                          <h3>We Professional Consultancy</h3>
+                          <h1>WE BUILD YOUR BUSINESS WITH OUR EXPERTS</h1>
+                          <form>
+                           <input type="submit" name="submit" value="VIEW PORTOLIOS"/>&nbsp;&nbsp;
+                           <input type="submit" name="submit1" value="PURCHASE NOW"/>
+                          </form> 
+                        </div>
+                      </div>
+
+                      <div class="item">
+                        <img src="http://localhost/sangita/theme/booster/pix/img2.jpg" alt="Chicago" style="width:100%;">
+                          <div class="carousel-caption">
+                            <h3>We Professional Consultancy</h3>
+                            <h1>WE BUILD YOUR BUSINESS WITH OUR EXPERTS</h1>
+                           <form>
+                               <input type="submit" name="submit" value="VIEW PORTOLIOS"/>
+                               <input type="submit" name="submit1" value="PURCHASE NOW"/>
+                           </form> 
+                          </div>
+                      </div>
+    
+                      <div class="item">
+                        <img src="http://localhost/sangita/theme/booster/pix/img3.jpg" alt="New York" style="width:100%;">
+                          <div class="carousel-caption">
+                            <h3>We Professional Consultancy</h3>
+                            <h1>WE BUILD YOUR BUSINESS WITH OUR EXPERTS</h1>
+                            <form>
+                              <input type="submit" name="submit" value="VIEW PORTOLIOS"/>
+                              <input type="submit" name="submit1" value="PURCHASE NOW"/>
+                            </form> 
+                          </div>
+                      </div>
+                  </div>
+
+                      <!-- Left and right controls -->
+                   <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                     <span class="glyphicon glyphicon-chevron-left"></span>
+                     <span class="sr-only">Previous</span>
+                   </a>
+                   <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                     <span class="glyphicon glyphicon-chevron-right"></span>
+                     <span class="sr-only">Next</span>
+                   </a>
+                </div>
+
+                {{!/***********DownButton***************/}}
+
+            <div class="bottom1">
+               <a href="http://localhost/sangita/#about"><i class="fa fa-chevron-circle-down" aria-hidden="true"></i></a>
+            </div>
+
+            {{!  /***************Section1********************/}}
+             <section class="section1">
+              <div class="container">
+                  <center><h2>WE LOVE TO DESIGN</h2></center>
+                  <center><span>-------------------------------------------------------</span><br>
+                           <span class="hz1"><hr align="center" height="2px solid black" width="10px"></span></center>
+                  <p class="hz1" align="center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi tempora veritatis nemo aut ea iusto<br> eos est expedita, quas ab adipisci consectetur tempora jet.</p>
+                  <div class="row row1">
+                    <div class="col-md-3">
+                      <div class="thumbnail">
+                      <div class="item">
+                      <a href="#"><i class="fa fa-leaf" aria-hidden="true"></i></a><br>
+                      <b>-----</b>
+                      
+                         <div class="caption">
+                          <h3 align="center">{{output.get_course1_config}}</h3>
+                          <p align="center">{{output.get_Discription1_config}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="thumbnail">
+                      <div class="item">
+                      <a href="#"><i class="fa fa-desktop" aria-hidden="true"></i></a><br>
+                      <b>&nbsp;&nbsp;&nbsp;-----</b>
+                      
+                         <div class="caption">
+                          <h3 align="center">{{output.get_course2_config}}</h3>
+                          <p align="center">{{output.get_Discription2_config}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="thumbnail">
+                      <div class="item">
+                      <a href="#">&nbsp;&nbsp;<i class="fa fa-mobile" aria-hidden="true"></i></a><br>
+                      <b>-----</b>
+                      
+                         <div class="caption">
+                          <h3 align="center">{{output.get_course3_config}}</h3>
+                          <p align="center">{{output.get_Discription3_config}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="thumbnail">
+                      <div class="item">
+                      <a href="#"><i class="fa fa-camera-retro" aria-hidden="true"></i></a><br>
+                      <b>&nbsp;&nbsp;&nbsp;-----</b>
+                      
+                         <div class="caption">
+                          <h3 align="center">{{output.get_course4_config}}</h3>
+                          <p align="center">{{output.get_Discription4_config}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>    
+              </div>
+
+              </section>
+            {{!/**************Section2******************/}}
+            <section class="section2">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-6 sec2">
+                        <h2>WHO WE ARE?</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim ve niam, quis nostruden exercitation ullamco.</p>
+
+                        <div class="row">
+                        <ul class="ul1">
+                            <li><i class="fa fa-compass hz2" aria-hidden="true"></i>OUT OF THE BOX<br>
+                            <p>Lorem ipsum dolor sit amet, conse adipisicing elit, sed do Eiusmod</p></li>
+
+                            <li><i class="fa fa-wpexplorer hz2" aria-hidden="true"></i>LATEST TECHNOLOGY<br>
+                            <p>Lorem ipsum dolor sit amet, conse adipisicing elit, sed do Eiusmod</p></li>
+                          
+                         </ul> 
+                         <ul class="ul2">
+                            <li><i class="fa fa-creative-commons hz2" aria-hidden="true"></i>OUR CREATIVITY<br>
+                            <p>Lorem ipsum dolor sit amet, conse adipisicing elit, sed do Eiusmod</p></li>
+
+                            <li><i class="fa fa-dot-circle-o hz2" aria-hidden="true"></i>SEO OPTIMIZED<br>
+                            <p>Lorem ipsum dolor sit amet, conse adipisicing elit, sed do Eiusmod</p></li>
+
+                         </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-md-5">
+                      <div class="bar1">
+                        <h2>OUR SKILLS</h2>
+                            <h4>GRAPHIC DESIGN</h4>
+                          <div class="progress">
+
+                              <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width:100%">
+                              100%
+                              </div>
+                          </div>
+                         <h4> HTML 5</h4>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" style="width:85%">
+                              85%
+                            </div>
+                          </div>
+                          <h4>CSS 3</h4>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" style="width:65%">
+                              65%
+                            </div>
+                          </div>
+                          <h4>BOOTSTRAP</h4>
+                          <div class="progress">
+                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width:45%">
+                              45%
+                            </div>
+                          </div>
+
+                        </div>
+                     </div>
+                    </div>
+                </div>
+            </section>
+
+            {{!/****************Section3******************/}}
+            <section class="section3">
+              <div class="container">
+                  <center><h2>WE LOVE TO DESIGN</h2></center>
+                  <center><span>-------------------------------------------------------</span><br>
+                           <span class="hz1"><hr align="center" height="2px solid black" width="10px"></span></center>
+                  <p class="hz1" align="center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi tempora veritatis nemo aut ea iusto<br> eos est expedita, quas ab adipisci consectetur tempora jet.</p>
+                  <div class="row row2">
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                      <figure>
+                        <img src="http://localhost/sangita/theme/booster/pix/1.jpg"/>
+                      </figure>
+                      <center><h4>JANE SMITH</h4>
+                      <h5>Web Designer</h5>
+                      <p>Lorem ipsum dolor sit amet, cons ectetur adipiscing elit Quisque rutrum pellentesque imperdiet</p>
+                      <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                      <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                      <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                      <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></center>
+
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                      <figure>
+                        <img src="http://localhost/sangita/theme/booster/pix/2.jpg"/>
+                      </figure>
+                      <center><h4>SKY YEN</h4>
+                      <h5>Graphic Designer</h5>
+                      <p>Lorem ipsum dolor sit amet, cons ectetur adipiscing elit Quisque rutrum pellentesque imperdiet</p>
+                      <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                      <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                      <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                      <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></center>
+
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                      <figure>
+                        <img src="http://localhost/sangita/theme/booster/pix/3.jpg"/>
+                      </figure>
+                      <center><h4>JULE SHARMIN</h4>
+                      <h5>Photographer</h5>
+                      <p>Lorem ipsum dolor sit amet, cons ectetur adipiscing elit Quisque rutrum pellentesque imperdiet</p>
+                      <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                      <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                      <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                      <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></center>
+
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-6">
+                      <figure>
+                        <img src="http://localhost/sangita/theme/booster/pix/4.jpg"/>
+                      </figure>
+                      <center>
+                        <h4>TOMMY HORTON</h4>
+                        <h5>Web Designer</h5>
+                        <p>Lorem ipsum dolor sit amet, cons ectetur adipiscing elit Quisque rutrum pellentesque imperdiet</p>
+                        <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                        <a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                      </center>
+
+                      </div>
+                 </div>    
+              </section>
+
+
+
+                    {{> theme_booster/footer }}
+    
+   </div>
+
+</body>
+</html>
+{{#js}}
+  require(['theme_boost/loader']);
+{{/js}}

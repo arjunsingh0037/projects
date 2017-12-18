@@ -1,0 +1,126 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_booster/frontpage_guest
+
+    Guest frontpage template.
+
+    booster frontpage guest layout template.
+
+    Context variables required for this template:
+    * sitename - The name of the site
+    * output - The core renderer for the page
+    * bodyattributes - attributes for the body tag as a string of html attributes
+
+    Example context (json):
+    {
+        "sitename": "Moodle",
+        "output": {
+            "doctype": "<!DOCTYPE html>",
+            "page_title": "Test page",
+            "favicon": "favicon.ico",
+            "main_content": "<h1>Headings make html validators happier</h1>"
+         },
+        "bodyattributes":"",
+        "cansignup": true,
+        "bannerheading": "Content string banner heading",
+        "bannercontent": "Content string banner content",
+        "shoulddisplaymarketing": true
+    }
+}}
+{{{ output.doctype }}}
+<html {{{ output.htmlattributes }}}>
+<head>
+    <title>{{{ output.page_title }}}</title>
+    <link rel="shortcut icon" href="{{{ output.favicon }}}" />
+    {{{ output.standard_head_html }}}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body {{{ bodyattributes }}}>
+
+<div id="page-wrapper">
+
+    {{{ output.standard_top_of_body_html }}}
+
+    {{>theme_booster/header}}
+
+    <div id="page" class="container-fluid">
+                  <nav class="nav navbar-nav">
+                    <div class="">
+                        <div class="navbar-header">
+                             <a class="navbar-brand" href="#">WebSiteName</a>
+                        </div>
+                        <ul class="nav navbar-nav">
+                          <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+
+                          <li><a href="#"><span class="outer"><span class="inner"><b>CONTACT</b></span></a></li>
+                          <li class="dropdown">
+                              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="outer"><span class="inner"><b>PAGES</b></span></a>
+                                  <ul class="dropdown-menu">
+                                      <li><a href="#">Blog Page 1</a></li>
+                                      <li><a href="#">Blog Page 2</a></li>
+                                       <li><a href="#">Blog Page 3</a></li>
+                                  </ul>
+                          </li>
+                          <li class="active"><a href="#"><span class="outer"><span class="inner"><b>BLOG</b></span></span></a></li>
+                          <li class="active"><a href="#"><span class="outer"><span class="inner"><b>PLAN & PRICING</b></span></span></a></li>
+                          <li class="active"><a href="#"><span class="outer"><span class="inner"><b>WORK</b></span></span></a></li>
+                          <li class="active"><a href="#"><span class="outer"><span class="inner"><b>OUR TEAM</b></span></span></a></li>
+
+                           <li class="active"><a href="#"><span class="outer"><span class="inner"><b>ABOUT</b></span></span></a></li>
+                          <li class="active"><a href="#"><span class="outer"><span class="inner"><b>HOME</b></span></span></a></li>
+                        
+                      </ul>
+                    </div>
+                  </nav>
+
+
+        <div class="carousel-item">
+              <img src="http://localhost/sangita/theme/booster/pix/image1.jpg" alt="hello">
+          <div class="carousel-caption d-none d-md-block">
+            
+
+            <h3>We Professional Consultancy</h3><br>
+            <h1>WE BUILD YOUR BUSINESS WITH OUR EXPERTS</h1><br><br>
+            <form>
+              <input type="submit" name="submit" value="VIEW PORTOLIOS"/>
+              <input type="submit" name="submit1" value="PURCHASE NOW"/>
+             </form> 
+          </div>
+    </div>
+
+
+
+
+
+
+        
+
+      
+
+        <div class="container-fluid">
+          {{{ output.main_content }}}
+        </div>
+    </div>
+</div>
+
+{{> theme_booster/footer }}
+
+</body>
+</html>
+

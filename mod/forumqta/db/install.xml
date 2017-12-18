@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/forumqta/db" VERSION="20101203" COMMENT="XMLDB file for Moodle mod/forumqta"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="forumqta" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="Course forumqta activity belongs to" PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="name field for moodle instances" PREVIOUS="course" NEXT="intro"/>
+        <FIELD NAME="intro" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="General introduction of the forumqta activity" PREVIOUS="name" NEXT="introformat"/>
+        <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="Format of the intro field (MOODLE, HTML, MARKDOWN...)" PREVIOUS="intro" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="introformat" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" PREVIOUS="timecreated"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+      </INDEXES>
+    </TABLE>
+
+    <TABLE NAME="forumqta_blobs" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="blobid" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="format"/>
+          <FIELD NAME="format" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="blobid" NEXT="content"/>
+          <FIELD NAME="content" TYPE="binary" LENGTH="16777215" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="format" NEXT="filename"/>
+          <FIELD NAME="filename" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="content" NEXT="userid"/>
+          <FIELD NAME="userid" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="filename" NEXT="cookieid"/>
+          <FIELD NAME="cookieid" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="userid" NEXT="createip"/>
+          <FIELD NAME="createip" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="cookieid" NEXT="created"/>
+          <FIELD NAME="created" TYPE="datetime" LENGTH="23" NOTNULL="false" SEQUENCE="false" PREVIOUS="createip"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="blobid"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_cache" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="type" TYPE="char" LENGTH="8" NOTNULL="true" SEQUENCE="false" COMMENT="" NEXT="cacheid"/>
+          <FIELD NAME="cacheid" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="" PREVIOUS="type" NEXT="content"/>
+          <FIELD NAME="content" TYPE="binary" LENGTH="16777215" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="cacheid" NEXT="created"/>
+          <FIELD NAME="created"  TYPE="datetime" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="content" NEXT="lastread"/>
+          <FIELD NAME="lastread"  TYPE="datetime" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="created"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="type,cacheid"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_categories" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="categoryid"/>
+          <FIELD NAME="categoryid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="id" NEXT="parentid"/>
+          <FIELD NAME="parentid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="categoryid" NEXT="forumqtaid"/>
+          <FIELD NAME="forumqtaid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="parentid" NEXT="title"/>
+          <FIELD NAME="title" TYPE="char" LENGTH="80" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="forumqtaid" NEXT="tags"/>
+          <FIELD NAME="tags"  TYPE="char"  LENGTH="200" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="title" NEXT="content"/>
+          <FIELD NAME="content"  TYPE="char" LENGTH="800" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="tags" NEXT="qcount"/>
+          <FIELD NAME="qcount"  TYPE="int"  LENGTH="10" NOTNULL="true"  UNSIGNED="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="content" NEXT="position"/>
+          <FIELD NAME="position"  TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="" PREVIOUS="qcount" NEXT="backpath"/>
+          <FIELD NAME="backpath"  TYPE="char" LENGTH="804" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="position"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+          <KEY NAME="foreign" TYPE="foreign" FIELDS="forumqtaid" REFTABLE="forumqta" REFFIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_categorymetas" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="categoryid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" NEXT="title"/>
+          <FIELD NAME="title" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="categoryid" NEXT="content"/>
+          <FIELD NAME="content"  TYPE="char" LENGTH="1333" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="title"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="categoryid,title"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_contentwords" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="postid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" NEXT="wordid"/>
+          <FIELD NAME="wordid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="postid" NEXT="count"/>
+          <FIELD NAME="count" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="wordid" NEXT="type"/>
+          <FIELD NAME="type" TYPE="char" LENGTH="5" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="count" NEXT="questionid"/>
+          <FIELD NAME="questionid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="type"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="foreign1" TYPE="foreign" FIELDS="postid" REFTABLE="forumqta_posts" REFFIELDS="postid"/>
+          <KEY NAME="foreign2" TYPE="foreign" FIELDS="wordid" REFTABLE="forumqta_words" REFFIELDS="wordid"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_cookies" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="cookieid" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" NEXT="created"/>
+          <FIELD NAME="created" TYPE="datetime" LENGTH="23" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="cookieid" NEXT="createip"/>
+          <FIELD NAME="createip" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="created" NEXT="written"/>
+          <FIELD NAME="written" TYPE="datetime" LENGTH="23" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="createip" NEXT="writeip"/>
+          <FIELD NAME="writeip" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="written"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="cookieid"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_iplimits" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="ip"/>
+          <FIELD NAME="ip" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="id" NEXT="action"/>
+          <FIELD NAME="action" TYPE="char" LENGTH="1" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="ip" NEXT="period"/>
+          <FIELD NAME="period" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="action" NEXT="count"/>
+          <FIELD NAME="count" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="period"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_options" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="title" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false" COMMENT="" NEXT="content"/>
+          <FIELD NAME="content" TYPE="char" LENGTH="1333" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="title"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="title"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_pages" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="pageid" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" COMMENT="" NEXT="title"/>
+          <FIELD NAME="title" TYPE="char" LENGTH="80" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="pageid" NEXT="nav"/>
+          <FIELD NAME="nav" TYPE="char" LENGTH="1" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="title" NEXT="position"/>
+          <FIELD NAME="position" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="nav" NEXT="flags"/>
+          <FIELD NAME="flags" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="position" NEXT="permit"/>
+          <FIELD NAME="permit" TYPE="int" LENGTH="3" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="flags" NEXT="tags"/>
+          <FIELD NAME="tags" TYPE="char" LENGTH="200" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="permit" NEXT="heading"/>
+          <FIELD NAME="heading" TYPE="char" LENGTH="800" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="tags" NEXT="content"/>
+          <FIELD NAME="content" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="heading"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="pageid"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_postmetas" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="postid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" NEXT="title"/>
+          <FIELD NAME="title" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="postid" NEXT="content"/>
+          <FIELD NAME="content" TYPE="char" LENGTH="1333" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="title"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="postid,title" />
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_posts" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="postid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" COMMENT="" NEXT="groupid"/>
+          <FIELD NAME="groupid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="postid" NEXT="type"/>
+          <FIELD NAME="type" TYPE="char" LENGTH="8" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="groupid" NEXT="parentid"/>
+          <FIELD NAME="parentid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="type" NEXT="categoryid"/>
+          <FIELD NAME="categoryid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="parentid" NEXT="catidpath1"/>
+          <FIELD NAME="catidpath1" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="categoryid" NEXT="catidpath2"/>
+          <FIELD NAME="catidpath2" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="catidpath1" NEXT="catidpath3"/>
+          <FIELD NAME="catidpath3" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="catidpath2" NEXT="acount"/>
+          <FIELD NAME="acount" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="" PREVIOUS="catidpath3" NEXT="amaxvote"/>
+          <FIELD NAME="amaxvote" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="" PREVIOUS="acount" NEXT="selchildid"/>
+          <FIELD NAME="selchildid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="amaxvote" NEXT="closebyid"/>
+          <FIELD NAME="closedbyid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="selchilid" NEXT="userid"/>
+          <FIELD NAME="userid" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="closedbyid" NEXT="cookieid"/>
+          <FIELD NAME="cookieid" TYPE="int" LENGTH="20" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="userid" NEXT="createdip"/>
+          <FIELD NAME="createip" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="cookieid" NEXT="lastuserid"/>
+          <FIELD NAME="lastuserid" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="createdip" NEXT="lastip"/>
+          <FIELD NAME="lastip" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="lastuserid" NEXT="upvotes"/>
+          <FIELD NAME="upvotes" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="" PREVIOUS="lastip" NEXT="downvotes"/>
+          <FIELD NAME="downvotes" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="" PREVIOUS="upvotes" NEXT="netvotes"/>
+          <FIELD NAME="netvotes" TYPE="int" LENGTH="6" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="" PREVIOUS="downvotes" NEXT="lastviewip"/>
+          <FIELD NAME="lastviewip" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="netvotes" NEXT="views"/>
+          <FIELD NAME="views" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="" PREVIOUS="lastviewip" NEXT="hotness"/>
+          <FIELD NAME="hotness" TYPE="float" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="views" NEXT="flagcount"/>
+          <FIELD NAME="flagcount" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" COMMENT="" PREVIOUS="hotness" NEXT="format"/>
+          <FIELD NAME="format" TYPE="char" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="hotness" NEXT="created"/>
+          <FIELD NAME="created" TYPE="datetime" LENGTH="23" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="format" NEXT="updated"/>
+          <FIELD NAME="updated" TYPE="datetime" LENGTH="23" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="created" NEXT="updatedtype"/>
+          <FIELD NAME="updatetype" TYPE="char" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="updated" NEXT="title"/>
+          <FIELD NAME="title" TYPE="char" LENGTH="800" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="updatedtype" NEXT="content"/>
+          <FIELD NAME="content" TYPE="char" LENGTH="1333" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="title" NEXT="tags"/>
+          <FIELD NAME="tags" TYPE="char" LENGTH="800" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="content" NEXT="name"/>
+          <FIELD NAME="name" TYPE="char" LENGTH="40" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="tags" NEXT="notity"/>
+          <FIELD NAME="notify" TYPE="char" LENGTH="80" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="name"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="postid" />
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_posttags" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="postid"/>
+          <FIELD NAME="postid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="id" NEXT="wordid"/>
+          <FIELD NAME="wordid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="postid" NEXT="postcreated"/>
+          <FIELD NAME="postcreated" TYPE="datetime" LENGTH="23" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="wordid"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_sharedevents" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="entitytype"/>
+          <FIELD NAME="entitytype" TYPE="char" LENGTH="1" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="id" NEXT="entityid"/>
+          <FIELD NAME="entityid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="entitytype" NEXT="questionid"/>
+          <FIELD NAME="questionid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="entityid" NEXT="lastpostid"/>
+          <FIELD NAME="lastpostid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="questionid" NEXT="updatetype"/>
+          <FIELD NAME="updatetype" TYPE="char" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="lastpostid" NEXT="lastuserid"/>
+          <FIELD NAME="lastuserid" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="updatetype" NEXT="updated"/>
+          <FIELD NAME="updated" TYPE="datetime" LENGTH="23" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="lastuserid"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_tagmetas" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="tag" TYPE="char" LENGTH="80" NOTNULL="true" SEQUENCE="false" COMMENT="" NEXT="title"/>
+          <FIELD NAME="title" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="tag" NEXT="content"/>
+          <FIELD NAME="content" TYPE="char" LENGTH="1333" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="title"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="tag,title"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_tagwords" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="postid"/>
+          <FIELD NAME="postid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="id" NEXT="wordid"/>
+          <FIELD NAME="wordid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="postid"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="id" TYPE="primary" FIELDS="id" NEXT="postid"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_titlewords" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="postid"/>
+          <FIELD NAME="postid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="id" NEXT="wordid"/>
+          <FIELD NAME="wordid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="postid"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_userevents" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="userid"/>
+          <FIELD NAME="userid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="id" NEXT="entitytype"/>
+          <FIELD NAME="entitytype" TYPE="char" LENGTH="1" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="userid" NEXT="entityid"/>
+          <FIELD NAME="entityid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="entitytype" NEXT="questionid"/>
+          <FIELD NAME="questionid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="entityid" NEXT="lastpostid"/>
+          <FIELD NAME="lastpostid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="questionid" NEXT="updatetype"/>
+          <FIELD NAME="updatetype" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="lastpostid" NEXT="lastuserid"/>
+          <FIELD NAME="lastuserid" TYPE="int" LENGTH="20" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="updatetype" NEXT="updated"/>
+          <FIELD NAME="updated" TYPE="datetime" LENGTH="23" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="lastuserid"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_userfavorites" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="userid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="" NEXT="entitytype"/>
+          <FIELD NAME="entitytype" TYPE="char" LENGTH="1" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="userid" NEXT="entityid"/>
+          <FIELD NAME="entityid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="entitytype" NEXT="nouserenvents"/>
+          <FIELD NAME="nouserevents" TYPE="int" LENGTH="3" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="entityid"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="userid,entitytype,entityid"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_userlevels" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="userid"/>
+          <FIELD NAME="userid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="id" NEXT="entitytype"/>
+          <FIELD NAME="entitytype" TYPE="char" LENGTH="1" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="userid" NEXT="entityid"/>
+          <FIELD NAME="entityid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="entitytype" NEXT="level"/>
+          <FIELD NAME="level" TYPE="int" LENGTH="3" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="entityid"/>
+      </FIELDS>
+      <KEYS>
+          <!-- PK non-existent, add PK id -->
+          <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_userlimits" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="userid"/>
+          <FIELD NAME="userid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="id" NEXT="action"/>
+          <FIELD NAME="action" TYPE="char" LENGTH="1" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="userid" NEXT="period"/>
+          <FIELD NAME="period" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="action" NEXT="count"/>
+          <FIELD NAME="count" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="period"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_usermetas" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="userid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="" NEXT="title"/>
+          <FIELD NAME="title" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="userid" NEXT="content"/>
+          <FIELD NAME="content" TYPE="char" LENGTH="1333" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="title"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="userid,title"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_usernotices" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="noticeid" TYPE="int" LENGTH="20" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" COMMENT="" NEXT="userid"/>
+          <FIELD NAME="userid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="noticeid" NEXT="content"/>
+          <FIELD NAME="content" TYPE="char" LENGTH="1333" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="userid" NEXT="format"/>
+          <FIELD NAME="format" TYPE="char" LENGTH="40" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="content" NEXT="tags"/>
+          <FIELD NAME="tags" TYPE="char" LENGTH="40" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="format" NEXT="created"/>
+          <FIELD NAME="created" TYPE="datetime" LENGTH="8000" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="tags"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="noticeid"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_userpoints" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="userid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="" NEXT="points"/>
+          <FIELD NAME="points" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="userid" NEXT="qposts"/>
+          <FIELD NAME="qposts" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="points" NEXT="aposts"/>
+          <FIELD NAME="aposts" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="qposts" NEXT="cposts"/>
+          <FIELD NAME="cposts" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="aposts" NEXT="aselects"/>
+          <FIELD NAME="aselects" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="cposts" NEXT="aselecteds"/>
+          <FIELD NAME="aselecteds" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="aselects" NEXT="qupvotes"/>
+          <FIELD NAME="qupvotes" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="aselecteds" NEXT="qdownvotes"/>
+          <FIELD NAME="qdownvotes" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="qupvotes" NEXT="aupvotes"/>
+          <FIELD NAME="aupvotes" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="qdownvotes" NEXT="adownvotes"/>
+          <FIELD NAME="adownvotes" TYPE="int" LENGTH="9" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="aupvotes" NEXT="qvoteds"/>
+          <FIELD NAME="qvoteds" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="adownvotes" NEXT="avoteds"/>
+          <FIELD NAME="avoteds" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="qvoteds" NEXT="upvoteds"/>
+          <FIELD NAME="upvoteds" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="avoteds" NEXT="downvoteds"/>
+          <FIELD NAME="downvoteds" TYPE="int" LENGTH="11" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="upvoteds" NEXT="bonus"/>
+          <FIELD NAME="bonus" TYPE="datetime" LENGTH="23" NOTNULL="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="downvoteds"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="userid"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_uservotes" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="postid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" NEXT="userid"/>
+          <FIELD NAME="userid" TYPE="int" LENGTH="20" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="postid" NEXT="vote"/>
+          <FIELD NAME="vote" TYPE="int" LENGTH="4" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="userid" NEXT="flag"/>
+          <FIELD NAME="flag" TYPE="int" LENGTH="4" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="vote"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="postid,userid"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_widgets" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="widgetid" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" COMMENT="" NEXT="place"/>
+          <FIELD NAME="place" TYPE="char" LENGTH="2" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="widgetid" NEXT="position"/>
+          <FIELD NAME="position" TYPE="int" LENGTH="5" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="place" NEXT="tags"/>
+          <FIELD NAME="tags" TYPE="char" LENGTH="800" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="position" NEXT="title"/>
+          <FIELD NAME="title" TYPE="char" LENGTH="80" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="tags"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="widgetid"/>
+      </KEYS>
+    </TABLE>
+
+    <TABLE NAME="forumqta_words" COMMENT="Default comment for forumqta, please edit me">
+      <FIELDS>
+          <FIELD NAME="wordid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" COMMENT="" NEXT="word"/>
+          <FIELD NAME="word" TYPE="char" LENGTH="80" NOTNULL="true" SEQUENCE="false" COMMENT="" PREVIOUS="wordid" NEXT="titlecount"/>
+          <FIELD NAME="titlecount" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="word" NEXT="contentcount"/>
+          <FIELD NAME="contentcount" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="titlecount" NEXT="tagwordcount"/>
+          <FIELD NAME="tagwordcount" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="contentcount" NEXT="tagcount"/>
+          <FIELD NAME="tagcount" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" DEFAULT="0" COMMENT="" PREVIOUS="tagwordcount"/>
+      </FIELDS>
+      <KEYS>
+          <KEY NAME="primary" TYPE="primary" FIELDS="wordid"/>
+      </KEYS>
+    </TABLE>
+
+  </TABLES>
+</XMLDB>

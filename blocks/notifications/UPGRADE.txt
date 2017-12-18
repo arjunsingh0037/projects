@@ -1,0 +1,69 @@
+==================================================================================================
+Upgrade to 2.1
+==================================================================================================
+Starting from this version the notification mechanism runs as a task and not as a cron anymore.
+Previous moodle versions that don't have the task support are not supported anymore.
+For older moodle installations that don't support tasks please use the 2.0 version of this block.
+
+==================================================================================================
+Upgrade to 2.0
+==================================================================================================
+The 2.0 version is not retro compatible. Only Moodle 2.7 and higher are supported due
+to the new logging system. To upgrade to Notificatins 2.0 please follow these steps:
+
+1. Uninstall the old Notifications plugin
+2. Upgrade the Notifications plugin code by using git or by copying the 2.0 code under
+   MOODLE_ROOT/block/notifications
+3. Click on Notifications inside the Site Administration menu
+4. Follow the instructions and complete the procedure
+
+WARNING !! : Please understand that this procedure is going to remove the Notifications block from
+             all your courses. Your teachers will have to add the block again to their courses.
+
+==================================================================================================
+Upgrade from 1.3.x to 1.4
+==================================================================================================
+The upgrade from 1.3.x to 1.4 should be managed by the db/upgrade.php file for the LAMP stacks.
+There are some changes to the block tables so please check the db/upgrade.php file before you
+start the upgrade process.
+If in doubt or in trouble remove and reinstall the block.
+Check the new settings before you start using the block.
+
+==================================================================================================
+Upgrade from 1.0.x to 1.2
+==================================================================================================
+To upgrade from 1.0.x version to 1.2 version please reinstall the block 
+by first deleting the old one and then installing the new one.
+
+Here is the procedure:
+
+***************************************************************************
+NOTE: 
+***************************************************************************
+This procedure removes every previous instances of the block in all courses 
+where it has been added. Please perform these steps when upgrading.
+***************************************************************************
+
+
+- Access as administrator and go to the front page.
+
+- Click on Modules > Blocks > Manage blocks in the Site Administration Block.
+
+- Delete Notifications block.
+
+- Delete the folder MOODLE_ROOT/blocks/moodle_notifications
+
+- Copy the folder notifications to MOODLE_ROOT/blocks/
+	NOTE: The folder name has changed in the 1.2 version. The moodle_notification name
+	was used as database tables naming convention but it was too long in the moodle 2.3 
+	installations. To keep things clean and consistent the every "block_moodle_notifications" 
+	occurrence has been replaced with "block_notifications". 
+	That's why the new folder is now named notifications. 
+	This should not change anymore and I apologize for any trouble it may
+	cause you.
+
+- Go back to the front page and click on Notifications in the Site Administration Block.
+
+- At this point the tables are going to be recreated and the new block is going to be installed. 
+
+==================================================================================================
